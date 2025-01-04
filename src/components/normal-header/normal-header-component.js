@@ -1,28 +1,34 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.svg";
 
-const NormalHeader = () => {
+const NormalHeader = ({ isLoggedIn, setIsLoggedIn }) => {
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    setIsLoggedIn(false); // Log out the user
+    navigate("/"); // Redirect to landing page
+  };
+
   return (
-    <nav>
-      {/* Logo Section */}
-      <div className="logo">
-        <img src={logo} alt="Paytm Logo" />
-      </div>
+    isLoggedIn && ( // Only show the navbar if the user is logged in
+      <nav>
+        <div className="logo">
+          <img src={logo} alt="Paytm Logo" />
+        </div>
 
-      {/* Navigation Links */}
-      <div className="menu">
-        <a href="#consumer">Paytm for Consumer</a>
-        <a href="#business">Paytm for Business</a>
-        <a href="#relations">Investor Relations</a>
-        <a href="#company">Company</a>
-        <a href="#career">Career</a>
-      </div>
+        <div className="menu">
+          <Link to="/mobile-recharge">Mobile Recharge</Link>
+          <Link to="/transfer">Transfer</Link>
+          <Link to="/check-balance">Check Balance</Link>
+          <Link to="/transactions">Transaction History</Link>
 
-      {/* Authentication Buttons */}
-      <div className="auth-buttons">
-        <a href="#signin">Sign In</a>
-      </div>
-    </nav>
+          <button onClick={handleSignOut} className="signout-btn">
+            Sign Out
+          </button>
+        </div>
+      </nav>
+    )
   );
 };
 
